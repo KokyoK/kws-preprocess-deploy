@@ -114,7 +114,7 @@ void DFT(float x[SPEC_LEN], float out[2 * FFT_WIN_LEN])
     float xreal[N];
     float ximag[N];
 
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < N/2+1; i++)
     {
         xreal[i] = 0;
         ximag[i] = 0;

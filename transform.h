@@ -7,7 +7,7 @@
 
 using namespace std;
 // file information
-#define file_len 108480
+#define file_len 96000
 #define sample_rate 48000
 #define NEW_WAV_LEN 16000 // wav len after padding 0 at the end
 
@@ -43,7 +43,7 @@ using namespace std;
 // typedef ap_fixed<8,8> 
 
 
-extern "C" float * trans_audio(float wav[file_len], float feat_1d[N_MELS*MEL_SPEC_LEN]);
+extern "C" void trans_audio(float wav[file_len], float feat_1d[N_MELS*MEL_SPEC_LEN]);
 
 // int get_audio_length(char *filename);
 // int get_audio_rate(char *filename);

@@ -14,7 +14,7 @@ using namespace std;
 // short InputData[W]; //
 
 // WAVHEADER FileHeader; //
-extern "C" float * trans_audio(float wav1[file_len], float feat_1d[N_MELS*MEL_SPEC_LEN])
+extern "C" void trans_audio(float wav1[file_len], float feat_1d[N_MELS*MEL_SPEC_LEN])
 {
 
     printf("file len: %d\n", file_len);
@@ -89,7 +89,7 @@ extern "C" float * trans_audio(float wav1[file_len], float feat_1d[N_MELS*MEL_SP
     // {
     //     for (int k = 0; k < MEL_SPEC_LEN; k++)
     //     {
-    //         // cout << i << " " << k << "  " << mel_spec[i][k] << endl;
+            // cout << i << " " << k << "  " << mel_spec[i][k] << endl;
     //     }
     // }
 
@@ -102,11 +102,12 @@ extern "C" float * trans_audio(float wav1[file_len], float feat_1d[N_MELS*MEL_SP
     {
         for (int k = 0; k < MEL_SPEC_LEN; k++)
         {
-            feat_1d[i*N_MELS+k] = feature[i][k];
-            // cout << i << " " << k << "  " << feature[i][k] << endl;
+            feat_1d[i*MEL_SPEC_LEN+k] = feature[i][k];
+            // cout << i << " " << k << "  " << i*N_MELS+k << " "<< feat_1d[i*MEL_SPEC_LEN+k] << endl;
         }
     }
-    return feat_1d;
+  
+    // return feat_1d;
 }
 
 int cal_gcd(int a, int b)
