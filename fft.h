@@ -2,9 +2,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-// #include <iostream>
-// using namespace std;
-#define N 512
+#include <iostream>
+using namespace std;
+#define N 480
 #define FFT_WIN_LEN 512 // need to
 #define SPEC_LEN 241
 // const float PI = 3.1416;
@@ -97,6 +97,32 @@ void FFT(float x[SPEC_LEN], float out[2 * FFT_WIN_LEN])
                 xreal[index2] = ureal - treal;
                 ximag[index2] = uimag - timag;
             }
+        }
+    }
+
+    for (int i = 0; i < N / 2 + 1; i++)
+    {
+        out[2 * i] = xreal[i];
+        out[2 * i + 1] = ximag[i];
+        cout << "real " << i << "  " << xreal[i] << endl;
+        cout << "imag " << i << "  " << ximag[i] << endl;
+    }
+}
+
+void DFT(float x[SPEC_LEN], float out[2 * FFT_WIN_LEN])
+{
+    float xreal[N];
+    float ximag[N];
+
+    for (int i = 0; i < N; i++)
+    {
+        xreal[i] = 0;
+        ximag[i] = 0;
+        for (int n = 0; n < N; n++)
+        {
+            double angle = -2 * M_PI * i * n / N;
+            xreal[i] += x[n] * cos(angle);
+            ximag[i] += x[n] * sin(angle);
         }
     }
 

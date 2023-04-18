@@ -14,7 +14,7 @@ using namespace std;
 // short InputData[W]; //
 
 // WAVHEADER FileHeader; //
-void trans_audio(float wav1[file_len], float feature[N_MELS][MEL_SPEC_LEN])
+extern "C" float * trans_audio(float wav1[file_len], float feat_1d[N_MELS*MEL_SPEC_LEN])
 {
 
     printf("file len: %d\n", file_len);
@@ -95,14 +95,18 @@ void trans_audio(float wav1[file_len], float feature[N_MELS][MEL_SPEC_LEN])
 
     // ------------------------- step 5:  Amplitude 2 DB  ------------------------------
     // float feature[N_MELS][MEL_SPEC_LEN];
+    float feature[N_MELS][MEL_SPEC_LEN];
     amplitude2db(mel_spec, feature);
-    // for (int i = 0; i < N_MELS; i++) //矩阵乘法
-    // {
-    //     for (int k = 0; k < MEL_SPEC_LEN; k++)
-    //     {
-    //         cout << i << " " << k << "  " << feature[i][k] << endl;
-    //     }
-    // }
+    // float feat_1d[N_MELS*MEL_SPEC_LEN];
+    for (int i = 0; i < N_MELS; i++) //矩阵乘法
+    {
+        for (int k = 0; k < MEL_SPEC_LEN; k++)
+        {
+            feat_1d[i*N_MELS+k] = feature[i][k];
+            // cout << i << " " << k << "  " << feature[i][k] << endl;
+        }
+    }
+    return feat_1d;
 }
 
 int cal_gcd(int a, int b)
@@ -312,7 +316,7 @@ void spectrogram(float wav[NEW_WAV_LEN], float wav3_in[FRAME_COUNT][SPEC_LEN])
 
         float out[2 * FFT_WIN_LEN];
         float pow_out[SPEC_LEN];
-        FFT(x, out);
+        DFT(x, out);
 
         // stft.abs.pow(2)
         for (int j = 0; j < SPEC_LEN; j++)

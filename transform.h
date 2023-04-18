@@ -43,7 +43,7 @@ using namespace std;
 // typedef ap_fixed<8,8> 
 
 
-void trans_audio(float wav[file_len], float feature[N_MELS][MEL_SPEC_LEN]);
+extern "C" float * trans_audio(float wav[file_len], float feat_1d[N_MELS*MEL_SPEC_LEN]);
 
 // int get_audio_length(char *filename);
 // int get_audio_rate(char *filename);

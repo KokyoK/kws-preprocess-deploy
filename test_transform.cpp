@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <iostream>
-#include "transform.h"
+#include "transform.cpp"
 #include "tb_transform.h"
-#include "tc_resnet8.h"
+// #include "tc_resnet8.h"
 #include <string>
 #include <math.h>
 
@@ -104,34 +104,35 @@ int main()
 
     float wavform[file_len];
     read_audio(wavform);
-    /*
-    float feature[N_MELS][MEL_SPEC_LEN];
+    
+    float feature[N_MELS*MEL_SPEC_LEN];
+
     trans_audio(wavform, feature);
-    // for (int i = 0; i < N_MELS; i++) // 矩阵乘法
-    // {
-    //     for (int k = 0; k < MEL_SPEC_LEN; k++)
-    //     {
-    //         cout << i << " " << k << "  " << feature[i][k] << endl;
-    //     }
-    // }
-    ADT feat[40][101];
-    for (int i = 0; i < N_MELS; i++)
+    for (int i = 0; i < N_MELS; i++) // 矩阵乘法
     {
-        for (int j = 0;j <MEL_SPEC_LEN; j++)
+        for (int k = 0; k < MEL_SPEC_LEN; k++)
         {
-            feat[i][j]= (ADT)feature[i][j];
-            // cout <<"finish feat extract." <<i << " " << j << "  " << feat[i][j] << endl;
+            cout << i << " " << k << "  " << feature[i][k] << endl;
         }
     }
-    ADT prob[NUM_CLASS];
-    tcresnet_flow(feat,prob);
-    */
-    ADT prob[NUM_CLASS];
-    tc_resnet_full(wavform, prob);
-	for (int i = 0; i < 10; i++){
+    // ADT feat[40][101];
+    // for (int i = 0; i < N_MELS; i++)
+    // {
+    //     for (int j = 0;j <MEL_SPEC_LEN; j++)
+    //     {
+    //         feat[i][j]= (ADT)feature[i][j];
+    //         // cout <<"finish feat extract." <<i << " " << j << "  " << feat[i][j] << endl;
+    //     }
+    // }
+    // ADT prob[NUM_CLASS];
+    // tcresnet_flow(feat,prob);
+    
+    // ADT prob[NUM_CLASS];
+    // tc_resnet_full(wavform, prob);
+	// for (int i = 0; i < 10; i++){
 
-		cout << i << "  " << prob[i] << endl;
-	}
+	// 	cout << i << "  " << prob[i] << endl;
+	// }
     // CONV0_DWs
 
     printf("================================  program end ============================== \n");
