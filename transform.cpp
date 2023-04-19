@@ -315,9 +315,9 @@ void spectrogram(float wav[NEW_WAV_LEN], float wav3_in[FRAME_COUNT][SPEC_LEN])
 
         // need to discard padding
 
-        float out[2 * FFT_WIN_LEN];
+        float out[2 * SPEC_LEN];
         float pow_out[SPEC_LEN];
-        DFT(x, out);
+        FFTW(x, out);
 
         // stft.abs.pow(2)
         for (int j = 0; j < SPEC_LEN; j++)

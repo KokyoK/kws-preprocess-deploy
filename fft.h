@@ -4,6 +4,7 @@
 #include <math.h>
 #include <iostream>
 using namespace std;
+#include <fftw3.h>
 #define N 480
 #define FFT_WIN_LEN 512 // need to
 #define SPEC_LEN 241
@@ -134,3 +135,47 @@ void DFT(float x[SPEC_LEN], float out[2 * FFT_WIN_LEN])
         // cout << "imag " << i << "  " << ximag[i] << endl;
     }
 }
+// #include <stdio.h>
+// #include <stdlib.h>
+// #include <fftw3.h>
+
+
+
+void FFTW(float x[SPEC_LEN], float result[N+2])
+{
+    fftw_complex *in, *out;
+    fftw_plan p;
+    int i;
+
+    // 分配输入输出数组内存
+    in = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * N);
+    out = (fftw_complex*) fftw_malloc(sizeof(fftw_complex) * N);
+
+    // 设置输入信号
+    for (i = 0; i < N; i++) {
+        in[i][0] = x[i];
+        in[i][1] = 0;
+    }
+
+    // 创建 DFT 计算计划
+    p = fftw_plan_dft_1d(N, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
+
+    // 执行 DFT 计算
+    fftw_execute(p);
+
+    // 打印结果
+    for (i = 0; i < N; i++) {
+        // printf("out[%d] = %f + %fi\n", i, out[i][0], out[i][1]);
+        result[2*i] = out[i][0];
+        result[2*i+1] = out[i][1];
+        
+    }
+
+    // 释放内存
+    fftw_destroy_plan(p);
+    fftw_free(in);
+    fftw_free(out);
+
+    // return 0;
+}
+
